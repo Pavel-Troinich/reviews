@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reviews</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Редактирование отзыва</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="container">
   <?php
   include_once "./connect.php";
 
@@ -17,37 +17,30 @@
   $result = mysqli_query($link, $sql);
   $row = mysqli_fetch_array($result);
 
-  if ($_POST["name"]) {
-    $name = mysqli_real_escape_string($link, $_POST["name"]);
-    $title = mysqli_real_escape_string($link, $_POST["title"]);
-    $text = mysqli_real_escape_string($link, $_POST["text"]);
-
-    $update_sql = sprintf("UPDATE `reviews` SET `name` = '%s', `title` = '%s', `text` = '%s', `isApproved` = '1' WHERE `reviews`.`id` = '%s'", $name, $title, $text, $id);
-    if (mysqli_query($link, $update_sql)) {
-      echo "<h3>Отзыв опубликован.</h3><br><a href='/admin'>Вернуться к отзывам</a>";
-    } else {
-      echo "<h3>Произошла ошибка! Попробуйте позже ещё раз.</h3><br><a href='/admin'>Вернуться к отзывам</a>";
-    }
-  }
   ?>
-
-  <form class="form" name="review" method="POST" action="/tools/change.php?id=<?= $id ?>">
+  <h1 class="mb-4">Редактирование отзыва</h1>
+  <hr>
+  <form class="w-75 mx-auto fs-5" name="review" method="POST" action="/tools/update.php?id=<?= $id ?>">
     <p>
-      <label for="name">Ваше имя: </label><br><input type="text" name="name" value="<?= $row["name"] ?>" required>
+      <label for="name" class="form-label mb-2">Имя: </label>
+      <input class="form-control form-control-sm" type="text" name="name" value="<?= $row["name"] ?>" required>
     </p>
     <p>
-      <label for="title">Заголовок: </label><br><input type="text" name="title" value="<?= $row["title"] ?>" required>
+      <label for="title" class="form-label mb-2">Заголовок: </label>
+      <input class="form-control form-control-sm" type="text" name="title" value="<?= $row["title"] ?>" required>
     </p>
     <p>
-      <label for="text">Сообщение: </label><br><textarea name="text" required><?= $row["text"] ?></textarea>
+      <label for="text" class="form-label mb-2">Сообщение: </label>
+      <textarea class="form-control form-control-sm" name="text" required><?= $row["text"] ?></textarea>
+    </p>
+    <p>
+      <label for="rating" class="form-label mb-2">Оценка: </label><br>
+      <select class="form-select form-select-sm w-25" name="rating" disabled required>
+        <option value="<?= $row["rating"] ?>"><?= $row["rating"] ?></option>
+      </select>
     </p>
 
-    <label for="rating">Оценка: </label><br>
-    <select name="rating" disabled required>
-      <option value="<?= $row["rating"] ?>"><?= $row["rating"] ?></option>
-    </select>
-
-    <input type="submit" name="send" value="Добавить отзыв">
+    <input class="btn btn-outline-success my-2" type="submit" name="send" value="Опубликовать">
   </form>
 </body>
 

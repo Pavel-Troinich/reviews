@@ -1,13 +1,13 @@
-<div>
-  <a href="/tools/approve.php?id=%s">
-    <button>Опубликовать</button>
+<div class="mb-4 mt-2">
+  <a href="../tools/approve.php?id=%s" class="btn btn-outline-success btn-sm me-2" role="button">
+    Опубликовать
   </a>
-  <br>
-  <a href="/tools/change.php?id=%s">
-    <button>Редактировать</button>
+  
+  <a href="../tools/change.php?id=%s" class="btn btn-outline-warning btn-sm me-2" role="button">
+    Редактировать
   </a>
-  <br>
-  <a href="/tools/delete.php?id=%s">
-    <button>Удалить</button>
+  
+  <a href="../tools/delete.php?id=%s" class="btn btn-outline-danger btn-sm me-2" role="button">
+    Удалить
   </a>
 </div>
